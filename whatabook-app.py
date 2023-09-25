@@ -49,7 +49,9 @@ def display_book_by_id():
 def add_book_to_wishlist():
     # User input for customer ID and book ID to add to wishlist.
     customer_id = input("Enter customer ID: ")
+    # Add error handling for no customer ID found.
     book_id = input("Enter book ID: ")
+    # Add error handling for no book ID found.
     wishlist_item = {
         "customerId": customer_id,
         "bookId": book_id
@@ -87,7 +89,7 @@ def display_wishlist_by_customer():
     # Count the number of wishlist items for the customer ID, if there are none then return message.
     count = db.wishlistitems.count_documents({'customerId': customer_id})
     if count == 0:
-        print("No wishlist items found for customer ID:", customer_id)
+        print("No wishlist items found for customer ID, or customer ID does not exist:", customer_id)
     # Display the wishlist items for the customer ID.
     else:
         print(f"Wishlist items for customer ID: {customer_id}")
