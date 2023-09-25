@@ -58,6 +58,10 @@ def add_book_to_wishlist():
     db.wishlistitems.insert_one(wishlist_item)
     print("Book added to wishlist!")
 
+# -----------------------------
+# Need to add a function to remove books from wishlist here.
+# -----------------------------
+
 # Display wishlist by customer ID function
 def display_wishlist_by_customer():
     customer_id = input("Enter the customer ID (e.g., c1007): ")
@@ -102,6 +106,7 @@ def main():
         print("4: Display book by book ID")
         print("5: Add book to wishlist")
         print("6: Display Wishlist by Customer ID")
+        # Need to add print option to remove books from wishlist here.
         print("7: Exit")
         
         # User input for choice.
