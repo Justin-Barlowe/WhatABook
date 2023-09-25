@@ -16,7 +16,7 @@ def display_books():
     books = db.books.find()
     # Loop through the books collection and display the title and author.
     for book in books:
-        print(f"Title: {book['title']}, Author: {book['author']}")
+        print(f"Title: {book['title']}, Author: {book['author']}, Book ID: {book['bookId']}")
 
 # Display books by genre function
 def display_books_by_genre():
@@ -64,7 +64,7 @@ def add_book_to_wishlist():
 
 # Display wishlist by customer ID function
 def display_wishlist_by_customer():
-    customer_id = input("Enter the customer ID (e.g., c1007): ")
+    customer_id = input("Enter the customer ID (e.g., c1001): ")
     # Joining the wishlistitems and books collections on with book ID for better formatted response, rather than just book ID.
     pipeline = [
         {
@@ -118,13 +118,13 @@ def main():
         elif choice == "2":
             display_books_by_genre()
         elif choice == "3":
-            display_wishlist_by_customer()
+            search_books_by_author()
         elif choice == "4":
             display_book_by_id()
         elif choice == "5":
-            search_books_by_author()
-        elif choice == "6":
             add_book_to_wishlist()
+        elif choice == "6":
+            display_wishlist_by_customer()
         elif choice == "7":
             print("Goodbye!")
             break
