@@ -5,7 +5,10 @@
 
 // Connect to WhatABook DB via mongosh using:
 // mongosh "mongodb+srv://bellevueuniversity.w2mknhu.mongodb.net/WhatABook" --apiVersion 1 --username whatabook_admin
-// Password s3cret
+// Password: s3cret
+
+//Create database if it doesn't exist
+db = db.getSiblingDB('WhatABook');
 
 // Drop existing collections
 db.books.drop();
