@@ -13,16 +13,16 @@ db.books.find({ genre: 'Fantasy' })
 db.books.find({ author: 'J.R.R. Tolkien' })
 
 // Query to display a book by bookID
-db.books.findOne({ bookId: 'b004' })
+db.books.findOne({ bookId: 'b1004' })
 
 // Query to display a wishlist by customerId
-db.wishlistitems.findOne({ customerId: 'c001' })
+db.wishlistitems.findOne({ customerId: 'c1001' })
 
 // Query to add multiple books to a customer's wishlist
-db.wishlistitems.updateOne({ customerId: 'c001'}, {$addToSet: { bookId: { $each: ['b002', 'b005']}}})
+db.wishlistitems.updateOne({ customerId: 'c1001'}, {$addToSet: { bookId: { $each: ['b1002', 'b1005']}}})
 
 // Query to remove a book from a customer's wishlist
-db.wishlistitems.updateOne({ customerId: 'c001'}, {$pull: { bookId: 'b002' }})
+db.wishlistitems.updateOne({ customerId: 'c1001'}, {$pull: { bookId: 'b1002' }})
 
 
 
