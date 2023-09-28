@@ -3,145 +3,90 @@
 // Description: Database initialization file for WhatABook application.
 // Date: 9/25/2023
 
-//Delete the books, customers, and wishlist collections.
-db.books.drop()
-db.customers.drop()
-db.wishlist.drop()
+// Connect to WhatABook DB via mongosh using:
+// mongosh "mongodb+srv://bellevueuniversity.w2mknhu.mongodb.net/" --apiVersion 1 --username whatabook_admin
+// Password: s3cret
+
+// Create database if it doesn't exist
+db = db.getSiblingDB('WhatABook');
+
+// Drop existing collections
+db.books.drop();
+db.customers.drop();
+db.wishlistitems.drop();
 
 // Create the books collection using document validation.
 db.createCollection("books", {
-    validator: { $jsonSchema: {
-        bsonType: "object",
-        properties: {
-            bookId: { bsonType: "string" },
-            title: { bsonType: "string" },
-            genre: { bsonType: "string" },
-            author: { bsonType: "string" }
-        }
-    }}
-})
+  validator: { $jsonSchema: {
+      bsonType: "object",
+      properties: {
+          bookId: { bsonType: "string" },
+          title: { bsonType: "string" },
+          genre: { bsonType: "string" },
+          author: { bsonType: "string" }
+      }
+  }}
+});
 
 // Create the customers collection using document validation.
 db.createCollection("customers", {
-    validator: { $jsonSchema: {
-        bsonType: "object",
-        properties: {
-            customerId: { bsonType: "string" },
-            firstName: { bsonType: "string" },
-            lastName: { bsonType: "string" }
-        }
-    }}
-})
+  validator: { $jsonSchema: {
+      bsonType: "object",
+      properties: {
+          customerId: { bsonType: "string" },
+          firstName: { bsonType: "string" },
+          lastName: { bsonType: "string" }
+      }
+  }}
+});
 
 // Create the wishlist collection using document validation.
-db.createCollection("wishlist", {
-    validator: { $jsonSchema: {
-        bsonType: "object",
-        properties: {
-            customerId: { bsonType: "string" },
-            bookId: {
-                bsonType: "array",
-                items: { bsonType: "string" }
-            }
-        }
-    }}
-})
+db.createCollection("wishlistitems", {
+  validator: { $jsonSchema: {
+      bsonType: "object",
+      properties: {
+          customerId: { bsonType: "string" },
+          bookId: {
+              bsonType: "array",
+              items: { bsonType: "string" }
+          }
+      }
+  }}
+});
+// Create books collection and populate books
+db.books.insertMany([
+  {'bookId': 'b1001', 'title': 'Harry Potter and the Sorcerer\'s Stone', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1002', 'title': 'Harry Potter and the Chamber of Secrets', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1003', 'title': 'Harry Potter and the Prisoner of Azkaban', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1004', 'title': 'Harry Potter and the Goblet of Fire', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1005', 'title': 'Harry Potter and the Order of the Phoenix', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1006', 'title': 'Harry Potter and the Half-Blood Prince', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1007', 'title': 'Harry Potter and the Deathly Hallows', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1008', 'title': 'The Fellowship of the Ring', 'genre': 'Fantasy', 'author': 'J.R.R. Tolkien'},
+  {'bookId': 'b1009', 'title': 'The Two Towers', 'genre': 'Fantasy', 'author': 'J.R.R. Tolkien'},
+  {'bookId': 'b1010', 'title': 'The Return of the King', 'genre': 'Fantasy', 'author': 'J.R.R. Tolkien'},
+  {'bookId': 'b1011', 'title': 'Darkly Dreaming Dexter', 'genre': 'Thriller', 'author': 'Jeff Lindsay'},
+  {'bookId': 'b1012', 'title': 'Dearly Devoted Dexter', 'genre': 'Thriller', 'author': 'Jeff Lindsay'},
+  {'bookId': 'b1013', 'title': 'Dexter in the Dark', 'genre': 'Thriller', 'author': 'Jeff Lindsay'},
+  {'bookId': 'b1014', 'title': 'Dexter by Design', 'genre': 'Thriller', 'author': 'Jeff Lindsay'},
+  {'bookId': 'b1015', 'title': 'Dexter is Delicious', 'genre': 'Thriller', 'author': 'Jeff Lindsay'},
+  {'bookId': 'b1016', 'title': 'Double Dexter', 'genre': 'Thriller', 'author': 'Jeff Lindsay'},
+  {'bookId': 'b1017', 'title': 'Dexter\'s Final Cut', 'genre': 'Thriller', 'author': 'Jeff Lindsay'},
+  {'bookId': 'b1018', 'title': 'Dexter is Dead', 'genre': 'Thriller', 'author': 'Jeff Lindsay'}
+]);
 
+// Create customers collection and populate customers
+db.customers.insertMany([
+  {'customerId': 'c1001', 'firstName': 'Justin', 'lastName': 'Barlowe'},
+  {'customerId': 'c1002', 'firstName': 'John', 'lastName': 'Davidson'},
+  {'customerId': 'c1003', 'firstName': 'Jocelyn', 'lastName': 'Dupuis'},
+  {'customerId': 'c1004', 'firstName': 'Richard', 'lastName': 'Krasso'},
+  {'customerId': 'c1005', 'firstName': 'John', 'lastName': 'Smith'}
+]);
 
-// Books.
-Book1 = {
-    "bookId": "b001",
-    "title": "Fellowship of the Ring",
-    "genre": "Fantasy",
-    "author": "J.R.R. Tolkien"
-}
+// Create wishlist collection and populate wishlist items
+db.wishlistitems.insertMany([
+  {'customerId': 'c1001', 'bookId': [ 'b1001', 'b1002', 'b1003', 'b1004', 'b1005' ]},
+]);
 
-Book2 = {
-    "bookId": "b002",
-    "title": "The Two Towers",
-    "genre": "Fantasy",
-    "author": "J.R.R. Tolkien"
-}
-
-Book3 = {
-    "bookId": "b003",
-    "title": "The Return of the King",
-    "genre": "Fantasy",
-    "author": "J.R.R. Tolkien"
-}
-
-Book4 = {
-    "bookId": "b004",
-    "title": "The Book of Lost Tales",
-    "genre": "Fantasy",
-    "author": "J.R.R. Tolkien"
-}
-
-Book5 = {
-    "bookId": "b005",
-    "title": "The Hobbit",
-    "genre": "Fantasy",
-    "author": "J.R.R. Tolkien"
-}
-
-Book6 = {
-    "bookId": "b006",
-    "title": "The Road Goes Ever On",
-    "genre": "Fantasy",
-    "author": "J.R.R. Tolkien"
-}
-
-// Insert book documents.
-db.books.insertOne(Book1)
-db.books.insertOne(Book2)
-db.books.insertOne(Book3)
-db.books.insertOne(Book4)
-db.books.insertOne(Book5)
-db.books.insertOne(Book6)
-
-Customer1 = {
-    "customerId": "c001",
-    "firstName": "John",
-    "lastName": "Smith"
-}
-
-Customer2 = {
-    "customerId": "c002",
-    "firstName": "Patrick",
-    "lastName": "Eliis"
-}
-
-Customer3 = {
-    "customerId": "c003",
-    "firstName": "Samantha",
-    "lastName": "Thorn"
-}
-
-db.customers.insertOne(Customer1)
-db.customers.insertOne(Customer2)
-db.customers.insertOne(Customer3)
-
-Wishlist1 = {
-    "customerId": "c001",
-    "bookId": [ "b001", "b003" ]   
-}
-
-Wishlist2 = {
-    "customerId": "c002",
-    "bookId": [ "b001", "b003", "b006" ]   
-}
-
-Wishlist3 = {
-    "customerId": "c003",
-    "bookId": [ "b004", "b006" ]   
-}
-
-db.wishlist.insertOne(Wishlist1)
-db.wishlist.insertOne(Wishlist2)
-db.wishlist.insertOne(Wishlist3)
-
-
-
-
-
-
+print("Database initialized.");

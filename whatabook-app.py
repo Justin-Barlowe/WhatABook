@@ -14,14 +14,12 @@ db = client['WhatABook']
 def display_books():
     print("--- Displaying Books ---")
     books = db.books.find()
-    # Loop through the books collection and display the title and author.
     for book in books:
         print(f"Title: {book['title']}, Author: {book['author']}, Book ID: {book['bookId']}")
 
 # Display books by genre function
 def display_books_by_genre():
-    # User input for genre to filter by.
-    genre = input("Enter genre to filter by: (Fantasy, Thriller, ect.) ")
+    genre = input("Enter genre to filter by: (Fantasy, Thriller, etc.) ")
     print(f"--- Displaying Books in {genre} genre ---")
     books = db.books.find({"genre": genre})
     for book in books:
@@ -29,45 +27,48 @@ def display_books_by_genre():
 
 # Search books by Author
 def search_books_by_author():
-    # User input for author to search by.
     author = input("Enter author to search by: ")
     print(f"--- Displaying Books by {author} ---")
-    # Search the books collection for the author and display the title and author.
     books = db.books.find({"author": author})
     for book in books:
         print(f"Title: {book['title']}, Author: {book['author']}")
 
 # Display book by bookID
 def display_book_by_id():
-    # User input for book ID to search by.
     book_id = input("Enter book ID: ")
-    # Search the books collection for the book ID and display the title and author.
     book = db.books.find_one({"bookId": book_id})
     print(f"Title: {book['title']}, Author: {book['author']}")
 
 # Add books to wishlist
 def add_book_to_wishlist():
-    # User input for customer ID and book ID to add to wishlist.
     customer_id = input("Enter customer ID: ")
-    # Add error handling for no customer ID found.
     book_id = input("Enter book ID: ")
-    # Add error handling for no book ID found.
-    wishlist_item = {
-        "customerId": customer_id,
-        "bookId": book_id
-    }
-    # Insert the wishlist item into the wishlistitems collection.
-    db.wishlistitems.insert_one(wishlist_item)
+    if db.customers.count_documents({'customerId': customer_id}) == 0:
+        print("Customer ID not found.")
+        return
+    if db.books.count_documents({'bookId': book_id}) == 0:
+        print("Book ID not found.")
+        return
+    db.wishlistitems.update_one(
+        {'customerId': customer_id},
+        {'$addToSet': {'bookId': book_id}},
+        upsert=True
+    )
     print("Book added to wishlist!")
 
-# -----------------------------
-# Need to add a function to remove books from wishlist here.
-# -----------------------------
+# Function to remove books from wishlist
+def remove_book_from_wishlist():
+    customer_id = input("Enter customer ID: ")
+    book_id = input("Enter book ID to remove: ")
+    db.wishlistitems.update_one(
+        {'customerId': customer_id},
+        {'$pull': {'bookId': book_id}}
+    )
+    print(f"Book {book_id} removed from wishlist.")
 
 # Display wishlist by customer ID function
 def display_wishlist_by_customer():
     customer_id = input("Enter the customer ID (e.g., c1001): ")
-    # Joining the wishlistitems and books collections on with book ID for better formatted response, rather than just book ID.
     pipeline = [
         {
             '$match': {'customerId': customer_id}
@@ -85,12 +86,9 @@ def display_wishlist_by_customer():
         }
     ]
     wishlist_items = db.wishlistitems.aggregate(pipeline)
-    
-    # Count the number of wishlist items for the customer ID, if there are none then return message.
     count = db.wishlistitems.count_documents({'customerId': customer_id})
     if count == 0:
         print("No wishlist items found for customer ID, or customer ID does not exist:", customer_id)
-    # Display the wishlist items for the customer ID.
     else:
         print(f"Wishlist items for customer ID: {customer_id}")
         for item in wishlist_items:
@@ -98,7 +96,6 @@ def display_wishlist_by_customer():
 
 # Main application function
 def main():
-    # Options for the user to select from.
     while True:
         print("\n--- Welcome to WhatABook! ---")
         print("Please select an option below:")
@@ -107,14 +104,12 @@ def main():
         print("3: Search Books by Author")
         print("4: Display book by book ID")
         print("5: Add book to wishlist")
-        print("6: Display Wishlist by Customer ID")
-        # Need to add print option to remove books from wishlist here.
-        print("7: Exit")
+        print("6: Remove book from wishlist")
+        print("7: Display Wishlist by Customer ID")
+        print("8: Exit")
         
-        # User input for choice.
         choice = input("Enter choice: ")
         
-        # If else statements for user input.
         if choice == "1":
             display_books()
         elif choice == "2":
@@ -126,8 +121,10 @@ def main():
         elif choice == "5":
             add_book_to_wishlist()
         elif choice == "6":
-            display_wishlist_by_customer()
+            remove_book_from_wishlist()
         elif choice == "7":
+            display_wishlist_by_customer()
+        elif choice == "8":
             print("Goodbye!")
             break
         else:
