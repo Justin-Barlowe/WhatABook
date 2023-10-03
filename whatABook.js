@@ -55,13 +55,13 @@ db.createCollection("wishlistitems", {
 });
 // Create books collection and populate books
 db.books.insertMany([
-  {'bookId': 'b1001', 'title': 'Harry Potter and the Sorcerer\'s Stone', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
-  {'bookId': 'b1002', 'title': 'Harry Potter and the Chamber of Secrets', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
-  {'bookId': 'b1003', 'title': 'Harry Potter and the Prisoner of Azkaban', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
-  {'bookId': 'b1004', 'title': 'Harry Potter and the Goblet of Fire', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
-  {'bookId': 'b1005', 'title': 'Harry Potter and the Order of the Phoenix', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
-  {'bookId': 'b1006', 'title': 'Harry Potter and the Half-Blood Prince', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
-  {'bookId': 'b1007', 'title': 'Harry Potter and the Deathly Hallows', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1001', 'title': 'Sorcerer\'s Stone', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1002', 'title': 'Chamber of Secrets', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1003', 'title': 'Prisoner of Azkaban', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1004', 'title': 'Goblet of Fire', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1005', 'title': 'Order of the Phoenix', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1006', 'title': 'Half-Blood Prince', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
+  {'bookId': 'b1007', 'title': 'Deathly Hallows', 'genre': 'Fantasy', 'author': 'J.K. Rowling'},
   {'bookId': 'b1008', 'title': 'The Fellowship of the Ring', 'genre': 'Fantasy', 'author': 'J.R.R. Tolkien'},
   {'bookId': 'b1009', 'title': 'The Two Towers', 'genre': 'Fantasy', 'author': 'J.R.R. Tolkien'},
   {'bookId': 'b1010', 'title': 'The Return of the King', 'genre': 'Fantasy', 'author': 'J.R.R. Tolkien'},
